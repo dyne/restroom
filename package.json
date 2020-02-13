@@ -1,0 +1,29 @@
+{
+  "name": "restroom",
+  "version": "1.0.0",
+  "description": "Rest intreface for zencode smart contracts",
+  "main": "index.js",
+  "repository": "https://github.com/dyne/restroom",
+  "author": "Puria Nafisi Azizi <puria@dyne.org>",
+  "license": "AGPL-3.0",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon ."
+  },
+  "bin": {
+    "restroom": "./cli.js"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
+    "capture-console": "^1.0.1",
+    "chalk": "^3.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "yargs": "^15.1.0",
+    "zenroom": "^1.0.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}

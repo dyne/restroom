@@ -1,0 +1,49 @@
+#!/usr/bin/env node
+
+const argv = require('yargs')
+    .command("get <zencode>", "get the execution's result of a restroom zencode", {
+        conf: {
+            alias: 'c',
+            desc: 'config file to pass to the zencode execution'
+        },
+        data: {
+            alias: 'd',
+            desc: 'data JSON file to pass to the zencode execution'
+        
+        },
+        keys: {
+            alias: 'k',
+            desc: 'keys JSON file to pass to the zencode execution'
+        },
+        url: {
+            alias: 'u',
+            default: 'http://localhost:3000'
+        }
+    })
+    .demandCommand(1)
+    .help()
+    .argv
+
+const fs = require('fs');
+const axios = require('axios');
+const chalk = require('chalk')
+
+let json_data = {}
+
+if (argv.conf)
+    json_data.conf = fs.readFileSync(argv.conf).toString()
+
+"data keys".split(" ").forEach(item => {
+    if (argv[item])
+        json_data[item] = JSON.parse(fs.readFileSync(argv[item]))
+})
+
+axios.post(`${argv.url}/${argv.zencode}`, json_data)
+  .then(res => {
+    console.log(res.data);
+  })
+  .catch(err => {
+      console.error(chalk`{bold.blue url: ${err.config.url}}`)
+      console.error(chalk`{yellow data: ${err.config.data}}\n`)
+      console.error(chalk`{magenta ${err.response.data}}`)
+  });
