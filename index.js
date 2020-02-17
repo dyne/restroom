@@ -38,7 +38,6 @@ const request_handler = (req, res) => {
             .keys(req.body.keys)
             .print_err(text => errors.push(text))
             .print(text => result = result.concat(text))
-            .error((e) => console.log(`ERRORE ${e}`))
             .zencode_exec()
     })
     try {

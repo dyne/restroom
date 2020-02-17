@@ -9,7 +9,7 @@ const argv = require('yargs')
         data: {
             alias: 'd',
             desc: 'data JSON file to pass to the zencode execution'
-        
+
         },
         keys: {
             alias: 'k',
@@ -39,11 +39,22 @@ if (argv.conf)
 })
 
 axios.post(`${argv.url}/${argv.zencode}`, json_data)
-  .then(res => {
-    console.log(res.data);
-  })
-  .catch(err => {
-      console.error(chalk`{bold.blue url: ${err.config.url}}`)
-      console.error(chalk`{yellow data: ${err.config.data}}\n`)
-      console.error(chalk`{magenta ${err.response.data}}`)
-  });
+    .then(res => {
+        console.log(res.data);
+    })
+    .catch(err => {
+        console.error(chalk`{bold.blue url: ${err.config.url}}`)
+        console.error(chalk`{yellow data: ${err.config.data}}\n`)
+        for (const line of err.response.data.split('\n')) {
+            if (line.startsWith('[!]'))
+                console.error(chalk`{magenta ${line}}`)
+            else if (line.startsWith('[W]'))
+                console.error(chalk`{yellow ${line}}`)
+            else if (line.startsWith('[*]'))
+                console.error(chalk`{blue ${line}}`)
+            else if (line.startsWith(' .  '))
+                console.error(chalk`{gray ${line}}`)
+            else
+                console.error(line)
+        }    
+    });
