@@ -13,6 +13,7 @@ const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(require('morgan')('dev'))
 app.set('json spaces', 2)
 
 const requestHandler = (req, res) => {
