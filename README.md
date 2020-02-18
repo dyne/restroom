@@ -79,7 +79,17 @@ yarn start
 
 now all your zencode smart contracts are available as GET and POST
 with the name of the file without the `.zen` extension
-(eg. `random.zen` will be served as `/random` endpoint)
+(eg. `random.zen` will be served as `/api/random` endpoint)
+
+
+### 📖 OPENAPI
+
+When the server is run, the configured folder is loaded and parsed and a
+openapi (ex swagger) definition is serverd on the index page.
+
+Each time you hit the `/` index page, the openapi definitions are updated,
+this means that when you add new contracts into the `SMART_CONTRACTS` folder they  automatically appear into the swagger definition and are testable via the GUI.
+
 
 ### 💻 TEST CLIENT
 

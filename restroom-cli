@@ -1,60 +1,48 @@
 #!/usr/bin/env node
 
 const argv = require('yargs')
-    .command("get <zencode>", "get the execution's result of a restroom zencode", {
-        conf: {
-            alias: 'c',
-            desc: 'config file to pass to the zencode execution'
-        },
-        data: {
-            alias: 'd',
-            desc: 'data JSON file to pass to the zencode execution'
+  .command('get <zencode>', "get the execution's result of a restroom zencode", {
+    conf: {
+      alias: 'c',
+      desc: 'config file to pass to the zencode execution'
+    },
+    data: {
+      alias: 'd',
+      desc: 'data JSON file to pass to the zencode execution'
 
-        },
-        keys: {
-            alias: 'k',
-            desc: 'keys JSON file to pass to the zencode execution'
-        },
-        url: {
-            alias: 'u',
-            default: 'http://localhost:3000'
-        }
-    })
-    .demandCommand(1)
-    .help()
-    .argv
+    },
+    keys: {
+      alias: 'k',
+      desc: 'keys JSON file to pass to the zencode execution'
+    },
+    url: {
+      alias: 'u',
+      default: 'http://localhost:3000'
+    }
+  })
+  .demandCommand(1)
+  .help()
+  .argv
 
-const fs = require('fs');
-const axios = require('axios');
+const fs = require('fs')
+const axios = require('axios')
 const chalk = require('chalk')
+const util = require('./utils')
 
-let json_data = {}
+const jsonData = {}
 
-if (argv.conf)
-    json_data.conf = fs.readFileSync(argv.conf).toString()
+if (argv.conf) { jsonData.conf = fs.readFileSync(argv.conf).toString() }
 
-"data keys".split(" ").forEach(item => {
-    if (argv[item])
-        json_data[item] = JSON.parse(fs.readFileSync(argv[item]))
+'data keys'.split(' ').forEach(item => {
+  if (argv[item]) { jsonData[item] = JSON.parse(fs.readFileSync(argv[item])) }
 })
 
-axios.post(`${argv.url}/${argv.zencode}`, json_data)
-    .then(res => {
-        console.log(res.data);
-    })
-    .catch(err => {
-        console.error(chalk`{bold.blue url: ${err.config.url}}`)
-        console.error(chalk`{yellow data: ${err.config.data}}\n`)
-        for (const line of err.response.data.split('\n')) {
-            if (line.startsWith('[!]'))
-                console.error(chalk`{magenta ${line}}`)
-            else if (line.startsWith('[W]'))
-                console.error(chalk`{yellow ${line}}`)
-            else if (line.startsWith('[*]'))
-                console.error(chalk`{blue ${line}}`)
-            else if (line.startsWith(' .  '))
-                console.error(chalk`{gray ${line}}`)
-            else
-                console.error(line)
-        }    
-    });
+axios.post(`${argv.url}/api/${argv.zencode}`, jsonData)
+  .then(res => {
+    console.log(res.data)
+  })
+  .catch(err => {
+    console.error(chalk`{bold.blue url: ${err.config.url}}`)
+    console.error(chalk`{yellow data: ${err.config.data}}\n`)
+    util.coloredError(err.response.data)
+  })
