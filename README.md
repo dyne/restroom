@@ -125,9 +125,9 @@ The host to bind the server **default: 0.0.0.0**
 
 ### Example `.env`
 ```
-SMART_CONTRACTS=/home/src/restroom/zencode
+SMART_CONTRACTS=./zencode
 PORT=8000
-HOST=127.0.0.1
+HOST=0.0.0.0
 ```
 
 **[back to 🔝](#toc)**
