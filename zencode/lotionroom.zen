@@ -1,0 +1,15 @@
+rule check version 1.0.0
+
+rule input untagged
+
+rule unknown ignore
+
+Given nothing
+
+and I have lotionroom running on 'https://localhost:8080/'
+
+When I write 'execution.result' in 'block'
+
+Then print the 'block' as 'string'
+
+and save the block named 'block' into tendermint
