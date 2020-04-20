@@ -7,6 +7,7 @@ import mw from './middlewares/generic_zencode'
 import { generate } from './middlewares/openapi'
 import { SMART_CONTRACTS, PORT, HOST } from './utils/config'
 import { printPaths } from './utils/path'
+import database from './middlewares/database'
 
 const app = express()
 
@@ -14,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(require('morgan')('dev'))
 app.use(mw)
+app.use(database)
 app.use('/api/*', zencode)
 app.set('json spaces', 2)
 
