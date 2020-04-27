@@ -59,6 +59,7 @@
 git clone https://github.com/dyne/restroom
 cd restroom
 yarn install
+yarn build
 ``` 
 
 **[back to 🔝](#toc)**
