@@ -10,7 +10,7 @@
     "e": "cp -a node_modules/uWebSockets.js/uws_*_108.node dist",
     "sea": "pnpm b && pnpm e && pnpm p",
     "clean": "rm -fr dist && rm -f restroom",
-    "start": "nodemon -e ts -w ./src -x npm run watch:serve",
+    "dev": "nodemon -e ts -w ./src -x npm run watch:serve",
     "watch:serve": "node --loader ts-node/esm src/server.ts"
   },
   "bin": "dist/server.cjs",
@@ -31,6 +31,8 @@
     "@slangroom/wallet": "^1.7.1",
     "fets": "^0.6.2",
     "live-directory": "^3.0.3",
+    "pino": "^8.16.1",
+    "pino-pretty": "^10.2.3",
     "uWebSockets.js": "github:uNetworking/uWebSockets.js#semver:^20"
   },
   "devDependencies": {
@@ -46,7 +48,6 @@
     "regenerator-runtime": "^0.14.0",
     "rollup": "^4.3.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.2",
-    "winston": "^3.11.0"
+    "typescript": "^5.2.2"
   }
 }
